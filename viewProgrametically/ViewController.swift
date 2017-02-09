@@ -34,6 +34,9 @@ class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLay
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         return CGSizeMake(view.frame.width, 200)
     }
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 0
+    }
 
 }
 
@@ -45,15 +48,41 @@ class VideoCell: UICollectionViewCell {
     let thumbNailImageView:UIImageView = {
        let imageView = UIImageView()
         imageView.backgroundColor = UIColor.blueColor()
+        
         return imageView
     }()
+    let seperatorView:UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.blackColor()
+       
+        return view
+    }()
     func setupViews()  {
-     
+      
         addSubview(thumbNailImageView)
+        addSubview(seperatorView)
+       
+        addConstraintWithFormat("H:|-16-[v0]-16-|", views: thumbNailImageView)
+        addConstraintWithFormat("V:|-16-[v0]-16-[v1(1)]|", views: thumbNailImageView, seperatorView)
+        addConstraintWithFormat("H:|[v0]|", views: seperatorView)
+        
         thumbNailImageView.frame = CGRectMake(0, 0, 100, 100)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension UIView  {
+    func addConstraintWithFormat(format:String,views:UIView...)  {
+        var viewsDictionary = [String :UIView]()
+        for (index,view) in views.enumerate() {
+            let key = "v\(index)"
+            view.translatesAutoresizingMaskIntoConstraints = false
+            viewsDictionary[key] = view
+            
+        }
+        addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(format, options: NSLayoutFormatOptions(), metrics: nil, views: viewsDictionary))
     }
 }
