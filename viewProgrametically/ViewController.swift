@@ -49,6 +49,8 @@ class VideoCell: UICollectionViewCell {
        let imageView = UIImageView()
         imageView.backgroundColor = UIColor.blueColor()
         imageView.image = UIImage(named: "taylor_swift_blank_space")
+        imageView.contentMode = .ScaleAspectFill
+        imageView.clipsToBounds = true
         return imageView
     }()
     let seperatorView:UIView = {
@@ -60,6 +62,9 @@ class VideoCell: UICollectionViewCell {
     let userProfileImageView :UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = UIColor.greenColor()
+        imageView.image = UIImage(named: "taylor_swift_profile")
+        imageView.layer.cornerRadius = 22 // it should be half of the actual height
+        imageView.layer.masksToBounds = true
         return imageView
     }()
     let titleLabel:UILabel = {
