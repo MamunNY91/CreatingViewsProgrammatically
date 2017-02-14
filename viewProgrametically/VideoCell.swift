@@ -1,44 +1,12 @@
 //
-//  ViewController.swift
+//  Views.swift
 //  viewProgrametically
 //
-//  Created by Abdullah A Mamun on 1/27/17.
+//  Created by Abdullah A Mamun on 2/13/17.
 //  Copyright © 2017 Abdullah A Mamun. All rights reserved.
 //
 
 import UIKit
-
-class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLayout {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        navigationItem.title  = "Home"
-        collectionView?.backgroundColor = UIColor.whiteColor()
-        collectionView?.registerClass(VideoCell.self, forCellWithReuseIdentifier: "CellId")
-        
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
-    }
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CellId", forIndexPath: indexPath)
-        
-        return cell
-    }
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(view.frame.width, 200)
-    }
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
-        return 0
-    }
-
-}
 
 class VideoCell: UICollectionViewCell {
     override init(frame: CGRect) {
@@ -46,8 +14,8 @@ class VideoCell: UICollectionViewCell {
         setupViews()
     }
     let thumbNailImageView:UIImageView = {
-       let imageView = UIImageView()
-        imageView.backgroundColor = UIColor.blueColor()
+        let imageView = UIImageView()
+        
         imageView.image = UIImage(named: "taylor_swift_blank_space")
         imageView.contentMode = .ScaleAspectFill
         imageView.clipsToBounds = true
@@ -55,13 +23,13 @@ class VideoCell: UICollectionViewCell {
     }()
     let seperatorView:UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.blackColor()
-       
+        view.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
+        
         return view
     }()
     let userProfileImageView :UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = UIColor.greenColor()
+        
         imageView.image = UIImage(named: "taylor_swift_profile")
         imageView.layer.cornerRadius = 22 // it should be half of the actual height
         imageView.layer.masksToBounds = true
@@ -69,26 +37,29 @@ class VideoCell: UICollectionViewCell {
     }()
     let titleLabel:UILabel = {
         let label = UILabel()
-        label.backgroundColor = UIColor.purpleColor()
+        
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Taylor Swift-Blank Space"
         return label
     }()
     let subtitleTextView:UITextView = {
         let textView = UITextView()
-        textView.backgroundColor = UIColor.redColor()
         textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.text = "TaylorSwiftVevo • 16,272,675,786 views • 2 years ago"
+        textView.textContainerInset = UIEdgeInsetsMake(0, -4, 0, 0)
+        textView.textColor = UIColor.lightGrayColor()
         return textView
     }()
     
     
     func setupViews()  {
-      
+        
         addSubview(thumbNailImageView)
         addSubview(seperatorView)
         addSubview(userProfileImageView)
         addSubview(titleLabel)
         addSubview(subtitleTextView)
-       
+        
         addConstraintWithFormat("H:|-16-[v0]-16-|", views: thumbNailImageView)
         addConstraintWithFormat("H:|-16-[v0(44)]", views: userProfileImageView)
         
@@ -104,20 +75,20 @@ class VideoCell: UICollectionViewCell {
         addConstraint(NSLayoutConstraint.init(item: titleLabel, attribute: .Right, relatedBy: .Equal, toItem: thumbNailImageView, attribute: .Right, multiplier: 1, constant: 0))
         //height constraint
         addConstraint(NSLayoutConstraint.init(item: titleLabel, attribute: .Height, relatedBy: .Equal, toItem: self, attribute: .Height, multiplier: 0, constant: 20))
-                //addConstraintWithFormat("V:[v0(20)]", views: titleLabel)
+        //addConstraintWithFormat("V:[v0(20)]", views: titleLabel)
         
         //top constraint  for subtitleTextView
         
-        addConstraint(NSLayoutConstraint.init(item: subtitleTextView, attribute: .Top, relatedBy: .Equal, toItem: titleLabel, attribute: .Bottom, multiplier: 1, constant: 8))
+        addConstraint(NSLayoutConstraint.init(item: subtitleTextView, attribute: .Top, relatedBy: .Equal, toItem: titleLabel, attribute: .Bottom, multiplier: 1, constant: 4))
         //left constraint
         addConstraint(NSLayoutConstraint.init(item: subtitleTextView, attribute: .Left, relatedBy: .Equal, toItem:userProfileImageView , attribute: .Right, multiplier: 1, constant: 8))
         //right constraint
         addConstraint(NSLayoutConstraint.init(item: subtitleTextView, attribute: .Right, relatedBy: .Equal, toItem: titleLabel, attribute: .Right, multiplier: 1, constant: 0))
         //height constraint
-         addConstraint(NSLayoutConstraint.init(item: subtitleTextView, attribute: .Height, relatedBy: .Equal, toItem: self, attribute: .Height, multiplier: 0, constant: 20))
- 
+        addConstraint(NSLayoutConstraint.init(item: subtitleTextView, attribute: .Height, relatedBy: .Equal, toItem: self, attribute: .Height, multiplier: 0, constant: 30))
         
-       
+        
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -125,15 +96,3 @@ class VideoCell: UICollectionViewCell {
     }
 }
 
-extension UIView  {
-    func addConstraintWithFormat(format:String,views:UIView...)  {
-        var viewsDictionary = [String :UIView]()
-        for (index,view) in views.enumerate() {
-            let key = "v\(index)"
-            view.translatesAutoresizingMaskIntoConstraints = false
-            viewsDictionary[key] = view
-            
-        }
-        addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(format, options: NSLayoutFormatOptions(), metrics: nil, views: viewsDictionary))
-    }
-}
