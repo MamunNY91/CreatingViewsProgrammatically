@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		64034C711E5A8A8E00CCF9ED /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64034C701E5A8A8E00CCF9ED /* MenuBar.swift */; };
 		64D272AD1E3BBB4100939897 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D272AC1E3BBB4100939897 /* AppDelegate.swift */; };
 		64D272AF1E3BBB4100939897 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D272AE1E3BBB4100939897 /* HomeController.swift */; };
 		64D272B21E3BBB4100939897 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64D272B01E3BBB4100939897 /* Main.storyboard */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		64034C701E5A8A8E00CCF9ED /* MenuBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
 		64D272A91E3BBB4100939897 /* viewProgrametically.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = viewProgrametically.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		64D272AC1E3BBB4100939897 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		64D272AE1E3BBB4100939897 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				64EF08211E529C2D00F30A56 /* VideoCell.swift */,
+				64034C701E5A8A8E00CCF9ED /* MenuBar.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -169,6 +172,7 @@
 				64EF08221E529C2D00F30A56 /* VideoCell.swift in Sources */,
 				64EF081D1E529A9300F30A56 /* Extensions.swift in Sources */,
 				64D272AD1E3BBB4100939897 /* AppDelegate.swift in Sources */,
+				64034C711E5A8A8E00CCF9ED /* MenuBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -25,9 +25,23 @@ class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLay
             
         collectionView?.backgroundColor = UIColor.whiteColor()
         collectionView?.registerClass(VideoCell.self, forCellWithReuseIdentifier: "CellId")
-        
+        // to show the content below menu bar
+        collectionView?.contentInset = UIEdgeInsetsMake(50, 0, 0, 0)
+        collectionView?.scrollIndicatorInsets = UIEdgeInsetsMake(50, 0, 0, 0)
+        setMenuBar()
     }
+    let menuBar:MenuBar = {
+      let mb = MenuBar()
+        return mb
+    }()
+    
 
+    private func setMenuBar() {
+      view.addSubview(menuBar)
+        view.addConstraintWithFormat("H:|[v0]|", views: menuBar)
+        view.addConstraintWithFormat("V:|[v0(50)]", views: menuBar)
+    
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
