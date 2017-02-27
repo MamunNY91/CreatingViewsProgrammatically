@@ -21,15 +21,39 @@ class BaseCell: UICollectionViewCell {
 }
 
 class VideoCell: BaseCell {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupViews()
+    var video:Video? {
+    
+        didSet {
+            titleLabel.text = video?.title
+            thumbNailImageView.image = UIImage(named: (video?.thumbNailImageName)!)
+            
+            if let profileImageName = video?.channel?.profileImageName {
+                userProfileImageView.image = UIImage(named: profileImageName)
+                
+            }
+            if let channelName = video?.channel?.name,numberOfViews = video?.numberOfViews {
+                let numberFormatter = NSNumberFormatter()
+                numberFormatter.numberStyle = .DecimalStyle
+                let subtitleText = "\(channelName) • \(numberFormatter.stringFromNumber(numberOfViews)!) • 2 years ago"
+                subtitleTextView.text = subtitleText
+            }
+            //measure title text
+            if let title = video?.title {
+                let size = CGSizeMake(frame.width-16-44-16-8, 1000)
+                let option = NSStringDrawingOptions.UsesFontLeading.union(.UsesLineFragmentOrigin)
+                let estimatedRect = NSString(string: title).boundingRectWithSize(size, options: option, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(14)], context: nil)
+                if estimatedRect.size.height > 20 {
+                    titleLabelConstraint?.constant = 44
+                }
+                else{
+                  titleLabelConstraint?.constant = 20
+                }
+            }
+        }
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
+        
     let thumbNailImageView:UIImageView = {
         let imageView = UIImageView()
         
@@ -44,7 +68,7 @@ class VideoCell: BaseCell {
         
         return view
     }()
-    let userProfileImageView :UIImageView = {
+    var userProfileImageView :UIImageView = {
         let imageView = UIImageView()
         
         imageView.image = UIImage(named: "taylor_swift_profile")
@@ -57,6 +81,7 @@ class VideoCell: BaseCell {
         
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Taylor Swift-Blank Space"
+        label.numberOfLines = 2
         return label
     }()
     let subtitleTextView:UITextView = {
@@ -67,9 +92,10 @@ class VideoCell: BaseCell {
         textView.textColor = UIColor.lightGrayColor()
         return textView
     }()
-    
+    var titleLabelConstraint:NSLayoutConstraint?
     
     override func setupViews()  {
+        super.setupViews()
         
         addSubview(thumbNailImageView)
         addSubview(seperatorView)
@@ -81,7 +107,7 @@ class VideoCell: BaseCell {
         addConstraintWithFormat("H:|-16-[v0(44)]", views: userProfileImageView)
         
         //Verticle Constraint
-        addConstraintWithFormat("V:|-16-[v0]-8-[v1(44)]-16-[v2(1)]|", views: thumbNailImageView,userProfileImageView ,seperatorView)
+        addConstraintWithFormat("V:|-16-[v0]-8-[v1(44)]-36-[v2(1)]|", views: thumbNailImageView,userProfileImageView ,seperatorView)
         addConstraintWithFormat("H:|[v0]|", views: seperatorView)
         
         //top constraint
@@ -91,7 +117,8 @@ class VideoCell: BaseCell {
         //right constraint
         addConstraint(NSLayoutConstraint.init(item: titleLabel, attribute: .Right, relatedBy: .Equal, toItem: thumbNailImageView, attribute: .Right, multiplier: 1, constant: 0))
         //height constraint
-        addConstraint(NSLayoutConstraint.init(item: titleLabel, attribute: .Height, relatedBy: .Equal, toItem: self, attribute: .Height, multiplier: 0, constant: 20))
+        titleLabelConstraint = NSLayoutConstraint.init(item: titleLabel, attribute: .Height, relatedBy: .Equal, toItem: self, attribute: .Height, multiplier: 0, constant: 44)
+        addConstraint(titleLabelConstraint!)
         //addConstraintWithFormat("V:[v0(20)]", views: titleLabel)
         
         //top constraint  for subtitleTextView
