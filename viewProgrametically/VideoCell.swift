@@ -25,12 +25,10 @@ class VideoCell: BaseCell {
     
         didSet {
             titleLabel.text = video?.title
-            thumbNailImageView.image = UIImage(named: (video?.thumbNailImageName)!)
+            setupThumbnailImage()
+            setupProfileImage()
             
-            if let profileImageName = video?.channel?.profileImageName {
-                userProfileImageView.image = UIImage(named: profileImageName)
-                
-            }
+            
             if let channelName = video?.channel?.name,numberOfViews = video?.numberOfViews {
                 let numberFormatter = NSNumberFormatter()
                 numberFormatter.numberStyle = .DecimalStyle
@@ -51,8 +49,18 @@ class VideoCell: BaseCell {
             }
         }
     }
+    func setupProfileImage()  {
+        if let profileImageUrl = video?.channel?.profileImageName {
+           userProfileImageView.loadImageUsingUrlString(profileImageUrl)
+            
+        }
+    }
     
-    
+    func setupThumbnailImage(){
+        if let thumbnailImageUrl = video?.thumbNailImageName {
+             thumbNailImageView.loadImageUsingUrlString(thumbnailImageUrl)
+        }
+    }
         
     let thumbNailImageView:UIImageView = {
         let imageView = UIImageView()
@@ -74,6 +82,7 @@ class VideoCell: BaseCell {
         imageView.image = UIImage(named: "taylor_swift_profile")
         imageView.layer.cornerRadius = 22 // it should be half of the actual height
         imageView.layer.masksToBounds = true
+        imageView.contentMode = .ScaleAspectFill
         return imageView
     }()
     let titleLabel:UILabel = {
