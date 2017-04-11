@@ -62,8 +62,8 @@ class VideoCell: BaseCell {
         }
     }
         
-    let thumbNailImageView:UIImageView = {
-        let imageView = UIImageView()
+    let thumbNailImageView:CustomImageView = {
+        let imageView = CustomImageView()
         
         imageView.image = UIImage(named: "taylor_swift_blank_space")
         imageView.contentMode = .ScaleAspectFill
@@ -76,8 +76,8 @@ class VideoCell: BaseCell {
         
         return view
     }()
-    var userProfileImageView :UIImageView = {
-        let imageView = UIImageView()
+    var userProfileImageView :CustomImageView = {
+        let imageView = CustomImageView()
         
         imageView.image = UIImage(named: "taylor_swift_profile")
         imageView.layer.cornerRadius = 22 // it should be half of the actual height

@@ -55,7 +55,10 @@ class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLay
                     self.videos?.append(video)
                     video.channel = chanel
                 }
-                self.collectionView?.reloadData()
+               dispatch_async(dispatch_get_main_queue(), {
+                 self.collectionView?.reloadData()
+               })
+                
             }catch let jsonError {
                 print(jsonError)
             }
